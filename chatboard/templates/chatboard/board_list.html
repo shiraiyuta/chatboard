@@ -1,0 +1,11 @@
+{% extends 'chatboard/base.html' %}
+
+{% block content %}
+    {% for board in boards %}
+       <div>
+          <h2><a href="{% url 'post_list' pk=board.pk %}">{{ board.title }}</a></h2>
+          <p>作成日: {{ board.created_date }}</p>
+          
+        </div>
+    {% endfor %}
+{% endblock %}

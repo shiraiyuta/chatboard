@@ -1,0 +1,11 @@
+<html>
+    <head>
+        <title>掲示板</title>
+    </head>
+    <body>
+        <h1><a href="/">掲示板</a></h1>
+        <a href="{% url 'board_new' %}"></a>
+        {% block content%}
+        {% endblock %}
+    </body>
+</html>

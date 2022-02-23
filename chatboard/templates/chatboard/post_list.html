@@ -1,0 +1,15 @@
+{% extends 'chatboard/base.html' %}
+
+{% block content %}
+    {% for post in posts %}
+       <div>
+          <h2><a>{{ post.text }}</a></h2>
+          <p>{{ post.published_date }}</p>
+        </div>
+    {% endfor %}
+    <h3>新しいコメント</h3>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+{% endblock %}
