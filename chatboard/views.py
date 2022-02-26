@@ -14,7 +14,21 @@ def board_list(request):
 def post_list(request, pk):
     board = get_object_or_404(Board, pk=pk)
     posts = Post.objects.filter(belong = board).order_by('published_date')
-    return render(request, 'chatboard/post_list.html', {'posts' : posts})
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.published_date = timezone.now()
+            post.belong = board
+            post.save()
+            return redirect('post_list', pk=board.pk) 
+    else: 
+        form = PostForm()
+    params = {
+        'form' : form,
+        'posts' : posts,
+    }
+    return render(request, 'chatboard/post_list.html', params)
 
 
 def board_new(request):
@@ -31,20 +45,4 @@ def board_new(request):
     return render(request, 'chatboard/board_list', {'form': form})
 
 
-def post_new(request, pk):
-    board = get_object_or_404(Board, pk=pk)
-    if request.method == "POST":
-        form = PostForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.published_date = timezone.now()
-            post.belong = board
-            return redirect('post_list', pk=board.pk) 
-    else: 
-        form = PostForm()
 
-    return render(request, 'chatboard/post_list', {'form': form} )
-
-
-
-# Create your views here.
