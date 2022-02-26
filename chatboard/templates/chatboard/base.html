@@ -1,10 +1,14 @@
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <html>
     <head>
         <title>掲示板</title>
     </head>
     <body>
+        <div class ="page-header">
+        <a href="{% url 'board_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a></a>
         <h1><a href="/">掲示板</a></h1>
-        <a href="{% url 'board_new' %}"></a>
+        </div>
         {% block content%}
         {% endblock %}
     </body>

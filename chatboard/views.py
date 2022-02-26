@@ -14,7 +14,11 @@ def board_list(request):
 def post_list(request, pk):
     board = get_object_or_404(Board, pk=pk)
     posts = Post.objects.filter(belong = board).order_by('published_date')
-    return render(request, 'chatboard/post_list.html', {'posts' : posts})
+    paramas = {
+        'posts' : posts,
+        'boards' : board
+    }
+    return render(request, 'chatboard/post_list.html', paramas,)
 
 
 def board_new(request):
@@ -28,7 +32,7 @@ def board_new(request):
     else:
         form = BoardForm()
     
-    return render(request, 'chatboard/board_list', {'form': form})
+    return render(request, 'chatboard/board_new.html', {'form': form})
 
 
 def post_new(request, pk):
@@ -39,11 +43,12 @@ def post_new(request, pk):
             post = form.save(commit=False)
             post.published_date = timezone.now()
             post.belong = board
+            post.save()
             return redirect('post_list', pk=board.pk) 
     else: 
         form = PostForm()
 
-    return render(request, 'chatboard/post_list', {'form': form} )
+    return render(request, 'chatboard/post_new.html', {'form': form} )
 
 
 
